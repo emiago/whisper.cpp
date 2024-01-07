@@ -20,12 +20,13 @@ type model struct {
 // Make sure model adheres to the interface
 var _ Model = (*model)(nil)
 
-///////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////
 // LIFECYCLE
+func SetLogSilent() {
+	whisper.Whisper_log_silent()
+}
 
 func New(path string) (Model, error) {
-	whisper.Whisper_log_silent()
-
 	model := new(model)
 	if _, err := os.Stat(path); err != nil {
 		return nil, err
