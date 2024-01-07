@@ -17,6 +17,7 @@ import (
 extern void callNewSegment(void* user_data, int new);
 extern void callProgress(void* user_data, int progress);
 extern bool callEncoderBegin(void* user_data);
+extern void goLogSilent();
 
 // Text segment callback
 // Called on every newly generated text segment
@@ -107,6 +108,15 @@ func Whisper_init(path string) *Context {
 	} else {
 		return nil
 	}
+}
+
+//export goLogSilent
+func goLogSilent(level C.enum_ggml_log_level, message *C.char, userData unsafe.Pointer) {
+	// Do nothing
+}
+
+func Whisper_log_silent() {
+	C.whisper_log_set(C.ggml_log_callback(C.goLogSilent), nil)
 }
 
 // Frees all memory allocated by the model.

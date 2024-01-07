@@ -24,6 +24,8 @@ var _ Model = (*model)(nil)
 // LIFECYCLE
 
 func New(path string) (Model, error) {
+	whisper.Whisper_log_silent()
+
 	model := new(model)
 	if _, err := os.Stat(path); err != nil {
 		return nil, err
